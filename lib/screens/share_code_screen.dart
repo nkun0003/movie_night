@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http; // importing http from http package
 import 'dart:convert';
-import 'package:platform_device_id/platform_device_id.dart'; // importing platform_device_id to handle the device ID
+// import 'package:platform_device_id/platform_device_id.dart'; // importing platform_device_id to handle the device ID
 
 import '../api_keys.dart'; // here importing the file containing my API configuration
 
@@ -26,26 +26,24 @@ class _ShareCodeScreenState extends State<ShareCodeScreen> {
   // this function triggers the API call to start a new session
   Future<void> _startSession() async {
     try {
-      // fetching the device ID dynamically
-      final deviceId = await PlatformDeviceId.getDeviceId;
+      // preparing the API URL with device_id as a query parameter
+      final url = Uri.parse(
+          '${MOVIE_NIGHT_API_BASE_URL}start-session?device_id=E5446E3E-8BB4-4DC8-A82F-7F540E449195');
 
-      // preparing the API URL
-      final url = Uri.parse('${MOVIE_NIGHT_API_BASE_URL}start-session');
-
-      // making the HTTP GET request with the dynamic device ID
-      final response = await http.get(url, headers: {'device_id': deviceId!});
+      // makes the HTTP GET request
+      final response = await http.get(url);
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body)['data'];
         setState(() {
-          sessionCode = data['code'];
-          sessionId = data['session_id'];
-          isLoading = false;
+          sessionCode = data['code']; // extract the session code
+          sessionId = data['session_id']; // extract the session ID
+          isLoading = false; // Stop loading
         });
       } else {
         setState(() {
           isLoading = false;
-          errorMessage = 'Failed to start session. Please try again!';
+          errorMessage = 'Failed to start session. Please try again.';
         });
       }
     } catch (e) {

@@ -18,47 +18,38 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
   // creating method to join the session
   Future<void> _joinSession(String code) async {
     setState(() {
-      isLoading = true; // here start loading
-      errorMessage = null; // this is to clear any previous error message
+      isLoading = true; // starting the loading spinner
+      errorMessage = null; // clear any previous error message
     });
 
     try {
-      // preparing the API URL again to enter code and join the session
-      final url = Uri.parse('${MOVIE_NIGHT_API_BASE_URL}join-session');
-
-      // fetching the unique device ID
-      final deviceId =
-          'E5446E3E-8BB4-4DC8-A82F-7F540E449195'; // this is the dynamically fetched device ID
-
-      // here making the HTTP GET request with the device id and code as headers
-      final response = await http.get(
-        url,
-        headers: {'device_id': deviceId, 'code': code},
+      // construct the URL with query parameters
+      final url = Uri.parse(
+        '${MOVIE_NIGHT_API_BASE_URL}join-session?device_id=E5446E3E-8BB4-4DC8-A82F-7F540E449195&code=$code',
       );
 
+      // making the HTTP GET request
+      final response = await http.get(url);
+
       if (response.statusCode == 200) {
-        // decode the response body
         final data = json.decode(response.body)['data'];
-        final sessionId = data['session_id'];
+        final sessionId = data['session_id']; // here extracting session_id
 
-        // saving the session ID "could be stored in SharedPreferences, Provider, etc"
-        print('Session ID: $sessionId');
-
+        // save session_id for future use (e.g., SharedPreferences, Provider, etc.)
         setState(() {
-          isLoading = false; // here to stop loading
+          isLoading = false; // stop the loading spinner
         });
 
-        // navigating to the Movie Selection Screen
+        // navigate to the Movie Selection Screen
         Navigator.pushNamed(context, '/movie_selection');
       } else {
-        // handling API error responses
+        // handling invalid code or other errors
         setState(() {
           isLoading = false;
           errorMessage = 'Invalid code. Please try again!';
         });
       }
     } catch (e) {
-      // handling network or parsing errors
       setState(() {
         isLoading = false;
         errorMessage = 'An error occurred. Please check your connection.';
