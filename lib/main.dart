@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'screens/welcome_screen.dart';
 
-// import 'screens/share_code_screen.dart';
+import 'screens/share_code_screen.dart';
 // import 'screens/enter_code_screen.dart';
+
 void main() => runApp(MovieNight());
 
 class MovieNight extends StatelessWidget {
@@ -15,7 +16,7 @@ class MovieNight extends StatelessWidget {
       initialRoute: '/', // The starting screen is the WelcomeScreen.
       routes: {
         '/': (context) => WelcomeScreen(),
-        // '/share_code': (context) => ShareCodeScreen(),
+        '/share_code': (context) => ShareCodeScreen(),
         // '/enter_code': (context) => EnterCodeScreen(),
       },
     );
