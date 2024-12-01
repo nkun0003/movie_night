@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http; // importing http from http package
 import 'dart:convert';
-import 'package:platform_device_id/platform_device_id.dart'; // importing platform_device_id the handle the device ID
+import 'package:platform_device_id/platform_device_id.dart'; // importing platform_device_id to handle the device ID
 
 import '../api_keys.dart'; // here importing the file containing my API configuration
 
