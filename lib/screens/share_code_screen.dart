@@ -32,6 +32,8 @@ class _ShareCodeScreenState extends State<ShareCodeScreen> {
 
       // makes the HTTP GET request
       final response = await http.get(url);
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body)['data'];
