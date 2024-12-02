@@ -27,7 +27,13 @@ class _VotedMoviesScreenState extends State<VotedMoviesScreen> {
     return Scaffold(
       appBar: AppBar(title: Text('Voted Movies')),
       body: votedMovies.isEmpty
-          ? Center(child: Text('No movies voted yet ;).'))
+          ? Center(
+              child: Text(
+              'No movies voted yet ;).',
+              style: TextStyle(
+                fontFamily: 'Exo_2',
+              ),
+            ))
           : ListView.builder(
               itemCount: votedMovies.length,
               itemBuilder: (context, index) {
@@ -39,8 +45,18 @@ class _VotedMoviesScreenState extends State<VotedMoviesScreen> {
                           fit: BoxFit.cover,
                         )
                       : Image.asset('assets/images/movie.jpg'),
-                  title: Text(movie['title']),
-                  subtitle: Text('Release Date: ${movie['release_date']}'),
+                  title: Text(
+                    movie['title'],
+                    style: TextStyle(
+                      fontFamily: 'Exo_2',
+                    ),
+                  ),
+                  subtitle: Text(
+                    'Release Date: ${movie['release_date']}',
+                    style: TextStyle(
+                      fontFamily: 'Exo_2',
+                    ),
+                  ),
                 );
               },
             ),
