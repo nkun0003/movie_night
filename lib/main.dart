@@ -3,6 +3,7 @@ import 'screens/welcome_screen.dart';
 import 'screens/share_code_screen.dart';
 import 'screens/enter_code_screen.dart';
 import 'screens/movie_selection_screen.dart';
+import 'screens/voted_movies_screen.dart';
 
 void main() => runApp(MovieNight());
 
@@ -19,6 +20,7 @@ class MovieNight extends StatelessWidget {
         '/share_code': (context) => ShareCodeScreen(),
         '/enter_code': (context) => EnterCodeScreen(),
         '/movie_selection': (context) => MovieSelectionScreen(),
+        '/voted_movies': (context) => VotedMoviesScreen(),
       },
     );
   }

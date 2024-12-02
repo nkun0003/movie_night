@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import '../api_keys.dart';
+import '../helpers/file_helper.dart';
 
 class MovieSelectionScreen extends StatefulWidget {
   @override
@@ -67,9 +67,15 @@ class _MovieSelectionScreenState extends State<MovieSelectionScreen> {
       final url = Uri.parse(
           '${MOVIE_NIGHT_API_BASE_URL}vote-movie?session_id=$sessionId&movie_id=$movieId&vote=$vote');
       final response = await http.get(url);
+      print('Vote API Response: ${response.body}');
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body)['data'];
+
+        if (vote == true) {
+          // saving the movie to a JSON file if voted "Yes"
+          await FileHelper.saveMovie(movies[currentIndex]);
+        }
 
         if (data['match'] == true) {
           // display a dialog when there’s a match
@@ -105,9 +111,20 @@ class _MovieSelectionScreenState extends State<MovieSelectionScreen> {
         body: Center(child: CircularProgressIndicator()),
       );
     }
-
+    // movie choices display
     return Scaffold(
-      appBar: AppBar(title: Text('Movie Selection')),
+      appBar: AppBar(
+        title: Text('Movie Choices'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.history),
+            onPressed: () {
+              Navigator.pushNamed(context,
+                  '/voted_movies'); // here navigating to voted Movies Screen
+            },
+          ),
+        ],
+      ),
       body: movies.isEmpty
           ? Center(child: Text('No movies available.'))
           // making the image swiping
@@ -117,8 +134,8 @@ class _MovieSelectionScreenState extends State<MovieSelectionScreen> {
               onDismissed: (direction) {
                 final movie = movies[currentIndex];
                 final vote = direction == DismissDirection.endToStart
-                    ? false
-                    : true; // here where makes left for "No", right for "Yes"
+                    ? true
+                    : false; // here where makes left for "No", right for "Yes"
 
                 _voteMovie(movie['id'], vote);
 
@@ -158,7 +175,7 @@ class _MovieSelectionScreenState extends State<MovieSelectionScreen> {
                   height: 300,
                 )
               : Image.asset(
-                  'assets/images/placeholder.png',
+                  'assets/images/movie.jpg',
                   height: 300,
                 ),
           Padding(
