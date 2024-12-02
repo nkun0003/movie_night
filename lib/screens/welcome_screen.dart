@@ -27,18 +27,33 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget build(BuildContext context) {
     // here building the UI of the screen.
     return Scaffold(
-      appBar: AppBar(title: Text('Movie Night!')),
+      appBar: AppBar(
+        title: Text('Movie Night!'),
+        backgroundColor: Colors.teal,
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
               onPressed: () => Navigator.pushNamed(context, '/share_code'),
-              child: Text('Get a Code'),
+              child: Text(
+                'Get a Code',
+                style: TextStyle(
+                  fontFamily: 'Exo_2',
+                  fontSize: 18,
+                ),
+              ),
             ),
             ElevatedButton(
               onPressed: () => Navigator.pushNamed(context, '/enter_code'),
-              child: Text('Enter a Code'),
+              child: Text(
+                'Enter a Code',
+                style: TextStyle(
+                  fontFamily: 'Exo_2',
+                  fontSize: 18,
+                ),
+              ),
             ),
           ],
         ),

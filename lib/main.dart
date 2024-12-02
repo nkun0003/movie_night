@@ -12,8 +12,24 @@ class MovieNight extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.brown,
-      ),
+          useMaterial3: true, // enabling Material 3 design
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors
+                .teal, // defining primary color, i used seed instead of Swatch due to its dynamic nature of the color scheme
+          ),
+          textTheme: const TextTheme(
+            bodyMedium: TextStyle(
+                fontSize: 20, fontFamily: 'Exo_2', color: Colors.white),
+          ),
+          // make the appBar styling global
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.teal,
+            titleTextStyle: TextStyle(
+              fontSize: 30,
+              fontFamily: 'Exo_2',
+              color: Colors.white,
+            ),
+          )),
       initialRoute: '/', // WelcomeScreen is the starting screen
       routes: {
         '/': (context) => WelcomeScreen(),
