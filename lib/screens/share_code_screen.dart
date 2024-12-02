@@ -72,15 +72,19 @@ class _ShareCodeScreenState extends State<ShareCodeScreen> {
                     children: [
                       Text(
                         'Your Code: $sessionCode', // displaying the session code
-                        style: TextStyle(
-                          fontSize: 24,
-                        ),
+                        style: TextStyle(fontSize: 24, fontFamily: 'Exo_2'),
                       ),
                       SizedBox(height: 16),
                       ElevatedButton(
                         onPressed: () =>
                             Navigator.pushNamed(context, '/movie_selection'),
-                        child: Text('Start Matching'),
+                        child: Text(
+                          'Start Matching',
+                          style: TextStyle(
+                            fontFamily: 'Exo_2',
+                            fontSize: 18,
+                          ),
+                        ),
                       ),
                     ],
                   ),

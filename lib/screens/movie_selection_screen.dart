@@ -82,9 +82,16 @@ class _MovieSelectionScreenState extends State<MovieSelectionScreen> {
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: Text('It’s a Match!'),
-              content:
-                  Text('You and your partner matched on ${data['movie_id']}!'),
+              title: Text(
+                'It’s a Match!',
+                style: TextStyle(
+                  fontFamily: 'Exo_2',
+                ),
+              ),
+              content: Text(
+                'You and your partner matched on ${data['movie_id']}!',
+                style: TextStyle(fontFamily: 'Exo_2', fontSize: 15),
+              ),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -126,7 +133,13 @@ class _MovieSelectionScreenState extends State<MovieSelectionScreen> {
         ],
       ),
       body: movies.isEmpty
-          ? Center(child: Text('No movies available.'))
+          ? Center(
+              child: Text(
+              'No movies available.',
+              style: TextStyle(
+                fontFamily: 'Exo_2',
+              ),
+            ))
           // making the image swiping
           : Dismissible(
               key: Key(movies[currentIndex]['id'].toString()),
@@ -188,9 +201,19 @@ class _MovieSelectionScreenState extends State<MovieSelectionScreen> {
                       fontSize: 24,
                     )),
                 SizedBox(height: 8),
-                Text('Release Date: ${movie['release_date']}'),
+                Text(
+                  'Release Date: ${movie['release_date']}',
+                  style: TextStyle(
+                    fontFamily: 'Exo_2',
+                  ),
+                ),
                 SizedBox(height: 16),
-                Text(movie['overview'] ?? 'No description available.'),
+                Text(
+                  movie['overview'] ?? 'No description available.',
+                  style: TextStyle(
+                    fontFamily: 'Exo_2',
+                  ),
+                ),
               ],
             ),
           ),

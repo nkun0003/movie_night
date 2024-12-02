@@ -94,7 +94,13 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
                           });
                         }
                       },
-                      child: Text('Begin'),
+                      child: Text(
+                        'Begin',
+                        style: TextStyle(
+                          fontFamily: 'Exo_2',
+                          fontSize: 18,
+                        ),
+                      ),
                     ),
                     if (errorMessage != null) // here display error messages
                       Padding(

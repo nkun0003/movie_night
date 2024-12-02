@@ -19,7 +19,9 @@ class MovieNight extends StatelessWidget {
           ),
           textTheme: const TextTheme(
             bodyMedium: TextStyle(
-                fontSize: 20, fontFamily: 'Exo_2', color: Colors.white),
+              fontSize: 20,
+              fontFamily: 'Exo_2',
+            ),
           ),
           // make the appBar styling global
           appBarTheme: const AppBarTheme(
