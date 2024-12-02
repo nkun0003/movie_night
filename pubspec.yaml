@@ -18,6 +18,17 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # of the product and file versions while build-number is used as the build suffix.
 version: 1.0.0+1
 
+flutter_native_splash:
+  color: '#42A5F5' # Background color for the splash screen
+  image: assets/images/icon.png # Path to the splash screen image
+  android: true
+  ios: true
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: 'assets/images/icon.png' # Path to the icon
+
 environment:
   sdk: ^3.5.4
 
@@ -35,6 +46,7 @@ dependencies:
   provider: ^6.0.5 # This is for state management, helping manage shared data between screens.
   shared_preferences: ^2.0.15 # This package allows storing data (like the device ID or session ID) locally.
   google_fonts: ^6.2.1 # This package allows us to use custom fonts from Google Fonts.
+  flutter_native_splash: ^2.2.19
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -43,6 +55,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

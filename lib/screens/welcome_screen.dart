@@ -45,6 +45,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
               ),
             ),
+            SizedBox(height: 20),
             ElevatedButton(
               onPressed: () => Navigator.pushNamed(context, '/enter_code'),
               child: Text(

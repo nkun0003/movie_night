@@ -98,7 +98,7 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
                         'Begin',
                         style: TextStyle(
                           fontFamily: 'Exo_2',
-                          fontSize: 18,
+                          fontSize: 20,
                         ),
                       ),
                     ),
