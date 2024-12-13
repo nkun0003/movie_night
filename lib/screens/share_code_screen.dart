@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http; // importing http from http package
 import 'dart:convert';
-// import 'package:platform_device_id/platform_device_id.dart'; // importing platform_device_id to handle the device ID
-
-// import '../api_keys.dart'; // here importing the file containing my API configuration
+import '../helpers/file_helper.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ShareCodeScreen extends StatefulWidget {
@@ -27,25 +25,22 @@ class _ShareCodeScreenState extends State<ShareCodeScreen> {
   // this function triggers the API call to start a new session
   Future<void> _startSession() async {
     try {
-      // preparing the API URL with device_id as a query parameter
       final url = Uri.parse(
-          '${dotenv.env['MOVIE_NIGHT_API_BASE_URL']}start-session?device_id=E5446E3E-8BB4-4DC8-A82F-7F540E449195');
-      if (url == null) {
-        print('MOVIE_NIGHT_API_BASE_URL is null!');
-      }
+        '${dotenv.env['MOVIE_NIGHT_API_BASE_URL']}start-session?device_id=E5446E3E-8BB4-4DC8-A82F-7F540E449195',
+      );
 
-      // makes the HTTP GET request
       final response = await http.get(url);
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body)['data'];
         setState(() {
-          sessionCode = data['code']; // extract the session code
-          sessionId = data['session_id']; // extract the session ID
-          isLoading = false; // Stop loading
+          sessionCode = data['code'];
+          sessionId = data['session_id'];
+          isLoading = false;
         });
+
+        // Save the session ID
+        await FileHelper.saveSessionId(sessionId!);
       } else {
         setState(() {
           isLoading = false;

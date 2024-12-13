@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import '../api_keys.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../helpers/file_helper.dart';
 
@@ -65,7 +64,9 @@ class _MovieSelectionScreenState extends State<MovieSelectionScreen> {
   // fetch function for voting movies
   Future<void> _voteMovie(int movieId, bool vote) async {
     try {
-      final sessionId = 'e15d1aaf-1dc5-464c-9168-86d153bbf3e1';
+      // Retrieve session_id dynamically
+      final sessionId =
+          await FileHelper.getSessionId(); // Example retrieval function
       final url = Uri.parse(
         '${dotenv.env['MOVIE_NIGHT_API_BASE_URL']}vote-movie?session_id=$sessionId&movie_id=$movieId&vote=$vote',
       );
@@ -75,38 +76,26 @@ class _MovieSelectionScreenState extends State<MovieSelectionScreen> {
       if (response.statusCode == 200) {
         final data = json.decode(response.body)['data'];
 
-        if (vote == true) {
-          // saving the movie to a JSON file if voted "Yes"
-          await FileHelper.saveMovie(movies[currentIndex]);
-        }
-
         if (data['match'] == true) {
-          // display a dialog when there’s a match
+          // Show match dialog
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: Text(
-                'It’s a Match!',
-                style: TextStyle(
-                  fontFamily: 'Exo_2',
-                ),
-              ),
-              content: Text(
-                'You and your partner matched on ${data['movie_id']}!',
-                style: TextStyle(fontFamily: 'Exo_2', fontSize: 15),
-              ),
+              title: Text('It’s a Match!'),
+              content:
+                  Text('You and your partner matched on ${data['movie_id']}!'),
               actions: [
                 TextButton(
-                  onPressed: () {
-                    Navigator.pop(context); // close the dialog
-                    Navigator.pop(context); // return to the Welcome Screen
-                  },
+                  onPressed: () =>
+                      Navigator.popUntil(context, ModalRoute.withName('/')),
                   child: Text('OK'),
                 ),
               ],
             ),
           );
         }
+      } else {
+        print('API Error: ${response.body}');
       }
     } catch (e) {
       print('Error voting: $e');
@@ -150,8 +139,8 @@ class _MovieSelectionScreenState extends State<MovieSelectionScreen> {
               onDismissed: (direction) {
                 final movie = movies[currentIndex];
                 final vote = direction == DismissDirection.endToStart
-                    ? true
-                    : false; // here where makes left for "No", right for "Yes"
+                    ? false
+                    : true; // here where makes left for "No", right for "Yes"
 
                 _voteMovie(movie['id'], vote);
 

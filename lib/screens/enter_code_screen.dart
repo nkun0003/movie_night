@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../helpers/file_helper.dart';
 
-// import '../api_keys.dart'; // here importing the API configuration file
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class EnterCodeScreen extends StatefulWidget {
@@ -19,32 +19,30 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
   // creating method to join the session
   Future<void> _joinSession(String code) async {
     setState(() {
-      isLoading = true; // starting the loading spinner
-      errorMessage = null; // clear any previous error message
+      isLoading = true;
+      errorMessage = null;
     });
 
     try {
-      // construct the URL with query parameters
       final url = Uri.parse(
         '${dotenv.env['MOVIE_NIGHT_API_BASE_URL']}join-session?device_id=E5446E3E-8BB4-4DC8-A82F-7F540E449195&code=$code',
       );
 
-      // making the HTTP GET request
       final response = await http.get(url);
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body)['data'];
-        final sessionId = data['session_id']; // here extracting session_id
+        final sessionId = data['session_id'];
 
-        // save session_id for future use (e.g., SharedPreferences, Provider, etc.)
+        // Save the session ID
+        await FileHelper.saveSessionId(sessionId);
+
         setState(() {
-          isLoading = false; // stop the loading spinner
+          isLoading = false;
         });
 
-        // navigate to the Movie Selection Screen
         Navigator.pushNamed(context, '/movie_selection');
       } else {
-        // handling invalid code or other errors
         setState(() {
           isLoading = false;
           errorMessage = 'Invalid code. Please try again!';

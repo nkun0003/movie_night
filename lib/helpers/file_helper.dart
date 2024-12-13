@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FileHelper {
   static Future<File> _getLocalFile() async {
@@ -21,7 +22,7 @@ class FileHelper {
 
       // avoid duplicates by checking for the movie ID
       if (!movies.any((m) => m['id'] == movie['id'])) {
-        movies.add(movie); // here adding the new movie to the list
+        movies.add(movie); // adding the new movie to the list
       }
 
       // write the updated list back to the file
@@ -44,6 +45,27 @@ class FileHelper {
     } catch (e) {
       print('Error reading saved movies: $e');
       return [];
+    }
+  }
+
+  // Save session ID to SharedPreferences
+  static Future<void> saveSessionId(String sessionId) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('session_id', sessionId);
+    } catch (e) {
+      print('Error saving session ID: $e');
+    }
+  }
+
+  // Retrieve session ID from SharedPreferences
+  static Future<String?> getSessionId() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      return prefs.getString('session_id');
+    } catch (e) {
+      print('Error retrieving session ID: $e');
+      return null;
     }
   }
 }
