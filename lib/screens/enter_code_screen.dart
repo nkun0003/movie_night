@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import '../api_keys.dart'; // here importing the API configuration file
+// import '../api_keys.dart'; // here importing the API configuration file
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class EnterCodeScreen extends StatefulWidget {
   @override
@@ -25,7 +26,7 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
     try {
       // construct the URL with query parameters
       final url = Uri.parse(
-        '${MOVIE_NIGHT_API_BASE_URL}join-session?device_id=E5446E3E-8BB4-4DC8-A82F-7F540E449195&code=$code',
+        '${dotenv.env['MOVIE_NIGHT_API_BASE_URL']}join-session?device_id=E5446E3E-8BB4-4DC8-A82F-7F540E449195&code=$code',
       );
 
       // making the HTTP GET request

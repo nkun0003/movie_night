@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../api_keys.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../helpers/file_helper.dart';
 
 class MovieSelectionScreen extends StatefulWidget {
@@ -29,7 +30,8 @@ class _MovieSelectionScreenState extends State<MovieSelectionScreen> {
 
     try {
       final url = Uri.parse(
-          '${TMDB_BASE_URL}movie/popular?api_key=$TMDB_API_KEY&page=$currentPage');
+        '${dotenv.env['TMDB_BASE_URL']}movie/popular?api_key=${dotenv.env['TMDB_API_KEY']}&page=$currentPage',
+      );
       final response = await http.get(url);
       // if the response is successful display the movie as per below
       if (response.statusCode == 200) {
@@ -65,7 +67,8 @@ class _MovieSelectionScreenState extends State<MovieSelectionScreen> {
     try {
       final sessionId = 'e15d1aaf-1dc5-464c-9168-86d153bbf3e1';
       final url = Uri.parse(
-          '${MOVIE_NIGHT_API_BASE_URL}vote-movie?session_id=$sessionId&movie_id=$movieId&vote=$vote');
+        '${dotenv.env['MOVIE_NIGHT_API_BASE_URL']}vote-movie?session_id=$sessionId&movie_id=$movieId&vote=$vote',
+      );
       final response = await http.get(url);
       print('Vote API Response: ${response.body}');
 

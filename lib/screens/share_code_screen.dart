@@ -3,7 +3,8 @@ import 'package:http/http.dart' as http; // importing http from http package
 import 'dart:convert';
 // import 'package:platform_device_id/platform_device_id.dart'; // importing platform_device_id to handle the device ID
 
-import '../api_keys.dart'; // here importing the file containing my API configuration
+// import '../api_keys.dart'; // here importing the file containing my API configuration
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ShareCodeScreen extends StatefulWidget {
   @override
@@ -28,7 +29,10 @@ class _ShareCodeScreenState extends State<ShareCodeScreen> {
     try {
       // preparing the API URL with device_id as a query parameter
       final url = Uri.parse(
-          '${MOVIE_NIGHT_API_BASE_URL}start-session?device_id=E5446E3E-8BB4-4DC8-A82F-7F540E449195');
+          '${dotenv.env['MOVIE_NIGHT_API_BASE_URL']}start-session?device_id=E5446E3E-8BB4-4DC8-A82F-7F540E449195');
+      if (url == null) {
+        print('MOVIE_NIGHT_API_BASE_URL is null!');
+      }
 
       // makes the HTTP GET request
       final response = await http.get(url);

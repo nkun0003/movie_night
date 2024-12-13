@@ -4,8 +4,12 @@ import 'screens/share_code_screen.dart';
 import 'screens/enter_code_screen.dart';
 import 'screens/movie_selection_screen.dart';
 import 'screens/voted_movies_screen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() => runApp(MovieNight());
+void main() async {
+  await dotenv.load(fileName: '.env'); // load the .env file
+  runApp(MovieNight());
+}
 
 class MovieNight extends StatelessWidget {
   @override
